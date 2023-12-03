@@ -54,6 +54,6 @@ try:
     ax[1][1].set_title("value at node " + str(elements[3]))
     ax[1][1].plot(x_, value_matrix[:, elements[3]])
     fig.subplots_adjust(hspace = 0.4)
-    plt.savefig("fig.png")
+    plt.savefig(graph_name + "_fig.png")
 except FileNotFoundError:
     print("Please provide valid file")

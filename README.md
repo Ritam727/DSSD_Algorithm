@@ -16,6 +16,8 @@ For running the simulations, we give the graph as input through a file. The file
           p = probability that a link is broken (p / n is taken as probability that a node fails)
           s = current input from the source in the corresponding electrical graph
           sims = number of simulations
+          th = threshold to consider whether a value is small enough
+          ma = maximum number of continuous iterations for which a value is less than threshold
 next m lines each consist of two integers u and v
     each pair denotes an undirected unweighted edge in the graph
 ```

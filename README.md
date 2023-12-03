@@ -10,11 +10,17 @@ pip install -r requirements.txt
 For running the simulations, we give the graph as input through a file. The file should be in the following format:
 
 1st line consists of n, m, src, p, s, sims
+
     where n = number of nodes
+    
           m = number of edges
+    
           src = source node of the graph
+          
           p = probability that a link is broken (p / n is taken as probability that a node fails)
+          
           s = current input from the source in the corresponding electrical graph
+          
           sims = number of simulations
 
 next m lines each consist of two integers u and v, each pair denotes an undirected unweighted edge in the graph

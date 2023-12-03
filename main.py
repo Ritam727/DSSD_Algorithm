@@ -19,19 +19,24 @@ try:
     graph_name = args.graphtype
     lines = f.readlines()
     n, m = 0, 0
-    n, m, src, p, s, sims = map(float, lines[0].split())
-    n, m, s, src, sims = map(int, [n, m, s, src, sims])
+    n, m, src, p, s, sims, th, ma = map(float, lines[0].split())
+    n, m, s, src, sims, ma = map(int, [n, m, s, src, sims, ma])
     gr = Graph(n, p, s, src)
     for i in range(m):
         u, v = map(int, lines[i + 1].split())
         gr.add_edge(u, v)
     gr.save_init_graph(graph_name)
+    cnt = np.zeros(n)
     value_matrix = [gr.val]
     elements = [0, int(n / 3), int(2 * n / 3), n - 1]
     for i in range(sims):
-        if i < 200:
-            gr.introduce_failure()
+        gr.introduce_failure()
         gr.update_values()
+        for j in range(n):
+            if gr.val[j] < th:
+                cnt[j] += 1
+            else:
+                cnt[j] = 0
         value_matrix.append(gr.val)
         if i % 100 == 99:
             gr.draw_graph(graph_name + str(i))
@@ -39,6 +44,17 @@ try:
             for j in gr.val:
                 print("%.4f"%(j), end = " ")
             print()
+    print("Following nodes have been disconnected from source:", end = " ")
+    fail = np.where(gr.val == -1)[0]
+    disc = np.where(cnt > ma)[0]
+    disc = np.setdiff1d(disc.reshape(len(disc),), fail.reshape(len(fail,)))
+    for j in disc:
+        print("Node", j, end = "  ")
+    print()
+    print("Following nodes have failed:", end = " ")
+    for j in fail:
+        print("Node", j, end = "  ")
+    print()
     value_matrix = np.array(value_matrix)
     x_ = list(range(1001))
     fig, ax = plt.subplots(2, 2, figsize = (10, 10))

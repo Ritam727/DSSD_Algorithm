@@ -1,28 +1,31 @@
 from graph import Graph
 import numpy as np
+import argparse
 
-graph_ = Graph(5, 0.01, 10)
+parser = argparse.ArgumentParser(prog = "main.py", description = "Simulate DSSD Algorithm")
+parser.add_argument("filename", type = str, help = "Name of file from which to read graph description")
 
-graph_.add_edge(0, 1)
-graph_.add_edge(1, 2)
-graph_.add_edge(2, 3)
-graph_.add_edge(3, 4)
-graph_.add_edge(0, 4)
+args = parser.parse_args()
 
-cnts = np.zeros(5)
-
-for i in range(100):
-    if i > 60:
-        graph_.adj[1][2] = graph_.adj[2][1] = 0
-        graph_.adj[3][4] = graph_.adj[4][3] = 0
-    graph_.update_values()
-    print(graph_.val)
-    for i in range(5):
-        if graph_.val[i] < 1e-5:
-            if cnts[i] > 5:
-                print("Node " + str(i) + " is disconnected from source")
-            cnts[i] += 1
-        else:
-            cnts[i] = 0
-
-print(graph_.val)
+try:
+    f = open(args.filename, "r")
+    lines = f.readlines()
+    n, m = 0, 0
+    n, m, src, p, s = map(float, lines[0].split())
+    n, m, s, src = map(int, [n, m, s, src])
+    gr = Graph(n, p, s, src)
+    for i in range(m):
+        u, v = map(int, lines[i + 1].split())
+        gr.add_edge(u, v)
+    gr.save_init_graph()
+    for i in range(500):
+        gr.introduce_failure()
+        gr.update_values()
+        if i % 100 == 99:
+            gr.draw_graph(i)
+            print(i + 1, "simulations complete")
+            for j in gr.val:
+                print("%.4f"%(j), end = " ")
+            print()
+except FileNotFoundError:
+    print("Please provide valid file")

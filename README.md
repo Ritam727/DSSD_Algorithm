@@ -16,7 +16,8 @@ For running the simulations, we give the graph as input through a file. The file
           p = probability that a link is broken (p / n is taken as probability that a node fails)
           s = current input from the source in the corresponding electrical graph
           sims = number of simulations
-next m lines each consist of two integers u and v, each pair denotes an undirected unweighted edge in the graph
+next m lines each consist of two integers u and v
+    each pair denotes an undirected unweighted edge in the graph
 ```
 See `graph.txt` for an example.
 

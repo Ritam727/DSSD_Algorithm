@@ -5,9 +5,9 @@ import matplotlib.pyplot as plt
 class Graph:
     def __init__(self, n, p, s, src):
         self.n = n
-        self.adj = np.zeros((n, n))
+        self.adj = np.zeros((n, n)) 
         self.val = np.zeros(n)
-        self.rem = np.zeros(n)
+        self.rem = np.zeros(n)  #removed nodes
         self.e1 = np.zeros(n)
         self.color_map = np.array(["cyan" for i in range(self.n)]).astype("object")
         self.color_map[src] = "green"

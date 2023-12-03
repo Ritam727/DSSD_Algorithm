@@ -9,7 +9,7 @@ class Graph:
         self.val = np.zeros(n)
         self.rem = np.zeros(n)
         self.e1 = np.zeros(n)
-        self.color_map = np.array(["blue" for i in range(self.n)]).astype("object")
+        self.color_map = np.array(["cyan" for i in range(self.n)]).astype("object")
         self.color_map[src] = "green"
         self.src = src
         self.e1[src] = 1
@@ -48,19 +48,19 @@ class Graph:
         self.drop_nodes()
         self.drop_edges()
 
-    def save_init_graph(self):
+    def save_init_graph(self, name):
         drawing = nx.from_numpy_array(self.adj)
         nx.draw(drawing, node_color = self.color_map, with_labels = True)
-        plt.savefig("images/0.png")
+        plt.savefig("images/" + name + ".png")
         plt.close()
 
-    def draw_graph(self, ind):
-        self.color_map[np.where(self.rem == 1)] = "black"
-        self.color_map[np.where(self.val < 1e-5)] = "black"
+    def draw_graph(self, name):
+        self.color_map[np.where(self.rem == 1)] = "gray"
+        self.color_map[np.where(self.val < 1e-4)] = "gray"
         self.color_map[np.where(self.rem == 1)] = "red"
         drawing = nx.from_numpy_array(self.adj)
         nx.draw(drawing, node_color = self.color_map, with_labels = True)
-        plt.savefig("images/" + str(ind) + ".png")
+        plt.savefig("images/" + name + ".png")
         plt.close()
     
     def update_values(self):
